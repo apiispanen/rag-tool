@@ -31,12 +31,13 @@ def main():
         # Configuration Page
         if "config" not in st.session_state:
             st.session_state.config = {
+                "search_jira_cards": {"enabled": True, "fields": ["query"]},
+                "search_slack_messsages": {"enabled": True, "fields": ["query"]},
                 "get_current_weather": {"enabled": True, "unit": "fahrenheit", "fields": ["location", "temperature", "unit"]},
                 "browse_company_items": {"enabled": True, "fields": ["keyword"]},
                 "contact_support": {"enabled": True, "fields": ["message"]},
                 "draft_email": {"enabled": True, "fields": ["to", "from", "subject", "body"]},
                 "analyze_sql_database": {"enabled": True, "fields": ["database", "query"]},
-                "search_jira_cards": {"enabled": True, "fields": ["query"]},
             }
 
         if not st.session_state.get("model"):
@@ -85,6 +86,44 @@ def main():
 
             with st.chat_message("assistant"):
                 tools = []
+                if st.session_state.config["search_jira_cards"]["enabled"]:
+                    tools.append({
+                        "type": "function",
+                        "function": {
+                            "name": "search_jira_cards",
+                            "description": "Search through Jira cards",
+                            "parameters": {
+                                "type": "object",
+                                "properties": {
+                                    "query": {
+                                        "type": "string",
+                                        "description": "The keyword query to run",
+                                    },
+                                },
+                                "required": ["query"],
+                            },
+                            "fields": st.session_state.config["search_jira_cards"]["fields"]
+                        },
+                    })
+                if st.session_state.config["search_slack_messsages"]["enabled"]:
+                    tools.append({
+                        "type": "function",
+                        "function": {
+                            "name": "search_slack_messsages",
+                            "description": "Search through Slack messages",
+                            "parameters": {
+                                "type": "object",
+                                "properties": {
+                                    "query": {
+                                        "type": "string",
+                                        "description": "The keyword query to run",
+                                    },
+                                },
+                                "required": ["query"],
+                            },
+                            "fields": st.session_state.config["search_slack_messsages"]["fields"]
+                        },
+                    })
                 if st.session_state.config["get_current_weather"]["enabled"]:
                     tools.append({
                         "type": "function",
@@ -197,25 +236,7 @@ def main():
                             "fields": st.session_state.config["analyze_sql_database"]["fields"]
                         },
                     })
-                if st.session_state.config["search_jira_cards"]["enabled"]:
-                    tools.append({
-                        "type": "function",
-                        "function": {
-                            "name": "search_jira_cards",
-                            "description": "Search through Jira cards",
-                            "parameters": {
-                                "type": "object",
-                                "properties": {
-                                    "query": {
-                                        "type": "string",
-                                        "description": "The keyword query to run",
-                                    },
-                                },
-                                "required": ["query"],
-                            },
-                            "fields": st.session_state.config["search_jira_cards"]["fields"]
-                        },
-                    })
+
 
                 stream = client.chat.completions.create(
                     model=st.session_state.model,
