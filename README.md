@@ -1,6 +1,6 @@
-# Dolphin Studios LLC Demo App
+# Dolphin Studios LLC Rag App
 
-<a href="https://dolphinstudios.co/"><img src="data/media/logo-white.png" width="200"></a>
+<a href="https://dolphinstudios.co/"><img src="app/media/logo-white.png" width="200"></a>
 
 Welcome to the Dolphin Studios LLC!
 
@@ -9,13 +9,13 @@ Welcome to the Dolphin Studios LLC!
 First, clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/apiispanen/dolphindemo.git
+git clone https://github.com/apiispanen/rag-tool.git
 ```
 
 Then, install the required packages:
 
 ```bash
-cd dolphindemo
+cd rag-tool
 pip install -r requirements.txt
 ```
 
