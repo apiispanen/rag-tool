@@ -56,7 +56,7 @@ def main():
                     st.session_state.config[tool] = settings
 
             st.header("Model")
-            st.session_state.model = st.selectbox("Choose a Model", ["gpt-4o", "gpt-4o-mini", "gpt-4", "gpt-3.5-turbo", "anthropic:claude-3-5-sonnet-20240620", "anthropic:claude-3-opus-20240229", "openpipe:llama3-1-8b"])
+            st.session_state.model = st.selectbox("Choose a Model", ["gpt-4o", "gpt-4o-mini", "gpt-4", "gpt-3.5-turbo", "anthropic:claude-3-5-sonnet-20240620", "anthropic:claude-3-opus-20240229", "openpipe:llama3-1-8b", "openpipe:mistral-8b-test"])
 
         # Testing Page
         st.header("Tool Call Tests")
