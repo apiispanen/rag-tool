@@ -44,7 +44,7 @@ def main():
             st.session_state.model = "gpt-4o"
 
         with st.sidebar:
-            st.header("Configuration")
+            st.header("Function Configuration")
             for tool, settings in st.session_state.config.items():
                 with st.expander(tool):
                     settings["enabled"] = st.checkbox("Enabled", value=settings["enabled"], key=f"{tool}_enabled")
